@@ -7,5 +7,5 @@ router.post('/login', userController.login);
 router.post('/post', userController.createPost);
 router.post('/sendFriend', userController.sendFriendRequest);
 router.post('/recieveFriend', userController.receiveFriendRequest);
-
+router.post('/update', userController.updateUserInfo);
 module.exports = router; // Fixed export
