@@ -164,9 +164,27 @@ class UserController {
       return res.status(500).json({ message: 'Internal server error' });
     }
   }
+  async updateUserInfo(req, res, next) {
+    try {
+      const { walletAddress, name, bio, profilePicture } = req.body;
 
+      // Find the user by wallet address
+      const user = await User.findOne({ walletAddress });
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      if (name) user.name = name;
+      if (bio) user.bio = bio;
+      if (profilePicture) user.profilePicture = profilePicture;
 
+      await user.save();
 
+      return res.status(200).json({ message: 'User information updated successfully', user });
+    } catch (error) {
+      console.error('Error updating user information:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  }
 }
 
 module.exports = new UserController();
